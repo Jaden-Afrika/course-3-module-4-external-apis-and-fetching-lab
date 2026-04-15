@@ -9,21 +9,22 @@ async function getWeatherAlerts(state) {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Failed to fetch weather alerts');
-            displayAlerts(data, state);
         }
+            displayAlerts(data, state);
+        
         const data = await response.json();
-        displayAlerts(data);        
+        displayAlerts(data, state);        
     }
     catch (error) {
         showError(error.message);
     }   
 }
 
-function displayAlerts(data) {
+function displayAlerts(data, state) {
     const displayArea = document.getElementById('weather-alerts');
     const alerts = data.features;
     const summary = document.createElement('h3');
-    summary.textContent = `Current Watches, warnings, and advisories for : ${alerts.length}`;
+    summary.textContent = `Current Watches, warnings, and advisories for ${state}: ${alerts.length}`;
     displayArea.appendChild(summary);
 
 const list = document.createElement('ul');
