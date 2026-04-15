@@ -9,6 +9,7 @@ async function getWeatherAlerts(state) {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Failed to fetch weather alerts');
+            displayAlerts(data, state);
         }
         const data = await response.json();
         displayAlerts(data);        
@@ -38,10 +39,10 @@ function resetUI() {
   const displayArea = document.getElementById('weather-alerts');
   const errorDiv = document.getElementById('error-message');
   const inputField = document.getElementById('state-input');
+  errorDiv.classList.add('hidden');
 
   displayArea.innerHTML = ''; 
   errorDiv.textContent = '';  
-  errorDiv.style.display = 'none'; 
   inputField.value = ''; 
 }
 
@@ -49,6 +50,7 @@ function showError(message) {
   const errorDiv = document.getElementById('error-message');
   errorDiv.textContent = message;
   errorDiv.style.display = 'block';
+  errorDiv.classList.remove('hidden');
 }
 document.getElementById('fetch-alerts').addEventListener('click', () => {
     const stateAbbr = document.getElementById('state-input').value;
